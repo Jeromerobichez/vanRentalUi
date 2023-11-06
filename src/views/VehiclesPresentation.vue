@@ -1,28 +1,33 @@
 <template>
-  <div class="container">
-    <h1>Page de présenation des différents modèle de véhicules</h1>
-      <div v-if="modelsData" v-for="model in modelsData" class="card-vehicle">
-          <div class="card-vehcile-text">
-              <h2>{{model.name}} </h2>
-              <p> Nombre de place : {{model.pax}}</p>
-              <p> Contenance du réservoir : {{model.gasTank}}</p>
-              <p> Prix par jour : {{model.pricePerDay}}</p>
-          </div>
-          <div class="card-vehcile-div-image">
-              <img class="card-vehcile-img" :src="model.pictureUrl" />
-          </div>
-          
-        
-      </div>
-  </div>
+    <div class="container">
+        <h1>Page de présenation des différents modèle de véhicules</h1>
+        <!--<VehiclePresentationComponent v-if="modelsData" :modelData="modelsData" />--> 
+        <div v-if="modelsData" v-for="model in modelsData" class="card-vehicle">
+            <div class="card-vehcile-text">
+                <h2>{{model.name}} </h2>
+                <p> Nombre de place : {{model.pax}}</p>
+                <p> Contenance du réservoir : {{model.gasTank}}</p>
+                <p> Prix par jour : {{model.pricePerDay}}</p>
+            </div>
+            <div class="card-vehcile-div-image">
+                <img class="card-vehcile-img" :src="model.pictureUrl" />
+            </div>
+
+
+        </div>
+    </div>
 
 </template>
 <script>
+    import VehiclePresentationComponent from '@/components/VehiclePresentationComponent.vue'
     export default {
         data() {
             return {
                 modelsData: []
             };
+        },
+        components: {
+VehiclePresentationComponent
         },
         methods: {
             async fetchVehicles() {

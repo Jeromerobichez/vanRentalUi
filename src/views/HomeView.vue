@@ -1,37 +1,24 @@
-<script setup >
 
-</script>
 
 <template>
   <main>
 <h1>Bienvenue sur le site de vanRental !</h1>
+      <DateForm />
   </main>
 </template>
 <script>
+    import DateForm from '@/components/DateForm.vue';
     export default {
         data() {
             return {
-                vehicleModels: []
             }
            
         },
-        methods: {
-            async fetchVehicles() {
-                console.log('début')
-                const url = 'https://localhost:7045/api/vanRental/GetAllModels'
-                console.log('url')
-                const response = await fetch(url);
-                console.log('fetch')
-                const models = response.json;
-              
-               console.log("models : ", models)
-
-            } 
+        components: {
+            DateForm
         },
-      async  mounted() {
-            this.fetchVehicles()
+        methods: {
+            } 
         }
-    
-    }
  
 </script>

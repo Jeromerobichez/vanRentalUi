@@ -4,33 +4,17 @@
         <p>
             Nous avons {{availableVehicles.modelsAvailable.length}} modèle(s) de véhicule disponible du <strong>{{dateDepart}}</strong> au <strong>{{dateRetour}}</strong>
         </p>
-        <!--<VehiclePresentationComponent v-if="modelsData" modelData="availableVehicles.modelsAvailable" />-->
-        <div class="contact-modal" v-if="isModalOpen">
-            <form method="post">
-                <label for="dateDepart">Date de départ :</label>
-                <input type="date" id="dateDepart" name="dateDepart" :value="this.$route.query.depart" required><br><br>
-
-                <label for="dateRetour">Date de retour :</label>
-                <input type="date" id="dateRetour" name="dateRetour" :value="this.$route.query.retour" required><br><br>
-
-                <label for="modeleVehicule">Modèle de véhicule :</label>
-                <input type="text" id="modeleVehicule" name="modeleVehicule" :value="selectedModelName" required><br><br>
-
-                <input type="hidden" id="modelId" name="modelId" :value="selectedModelId">
-
-                <label for="message">Message :</label>
-                <textarea id="message" name="message" rows="10" cols="20" ></textarea><br><br>
-
-                <input type="submit" value="Envoyer">
-            </form>
+        <div v-for="model in availableVehicles.modelsAvailable">
+            <VehiclePresentationComponent v-if="availableVehicles.modelsAvailable" :modelData="model" />
         </div>
+        
 
         <div class="modal-overlay"
              v-if="isModalOpen"
              @click="closeContactModal">
         </div>
 
-        <div class="card-vehicle"
+        <!--<div class="card-vehicle"
              v-if="availableVehicles"
              v-for="model in availableVehicles.modelsAvailable"
              
@@ -46,7 +30,7 @@
             <div class="card-vehcile-div-image">
                 <img class="card-vehcile-img" :src="model.picture_url" />
             </div>
-        </div>
+        </div>-->
     </div>
 </template>
 <script>
@@ -56,11 +40,18 @@
             return {
                 availableVehicles: [],
                 availableModelsVan: [],
-                dateDepart: "",
+                dateDepart: this.$route.query.depart,
                 dateRetour: "",
                 isModalOpen: false,
                 selectedModelId: "",
-                selectedModelName: ""
+                selectedModelName: "",
+                    request : {
+                        dateDepart: this.$route.query.depart,
+                        dateRetour: this.$route.query.retour,
+                        modeleVehicule: '',
+                        id: '',
+                        message: ''
+                    }
             }
         }, 
         components: {
@@ -100,7 +91,7 @@
         background-color: white;
         height: 75vh;
         width: 75vh;
-        position: absolute;
+        position: fixed;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -108,13 +99,14 @@
         display: flex;
         flex-direction: column;
     }
-    .modal-overlay{
-        position: absolute;
+    .modal-overlay {
+        position: fixed;
         top: 0;
         height: 100vh;
         width: 100%;
         z-index: 2;
         background-color: rgba(0,0,0,0.8);
+        overflow: hidden;
     }
     #message{
         width: 60%;

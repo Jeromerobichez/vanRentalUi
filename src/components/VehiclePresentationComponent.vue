@@ -22,7 +22,7 @@
             <input type="date" id="dateDepart" name="dateDepart" v-model="requestRental.DepartureDateRequested" required><br><br>
 
             <label for="dateRetour">Date de retour :</label>
-            <input type="date" id="dateRetour" name="dateRetour" :value="this.$route.query.ReturnDateRequested" required><br><br>
+            <input type="date" id="dateRetour" name="dateRetour" v-model="requestRental.ReturnDateRequested" required><br><br>
 
             <label for="modeleVehicule">Modèle de véhicule :</label>
             <input type="text" id="modeleVehicule" name="modeleVehicule" v-model="requestRental.ModelVehicleRequested" required><br><br>

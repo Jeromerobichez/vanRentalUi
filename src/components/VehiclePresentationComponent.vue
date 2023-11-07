@@ -78,15 +78,9 @@
                 e.preventDefault();
                 try {
 
-
-                    const response = axios.post('https://localhost:7045/SendRentalRequest',
-                        {
-                            DepartureDateRequested: this.requestRental.DepartureDateRequested.toString(),
-                            ReturnDateRequested: this.requestRental.ReturnDateRequested,
-                            ModelVehicleRequested: this.requestRental.ModelVehicleRequested,
-                            ModelId: this.requestRental.ModelId,
-                            MessageRequest: this.requestRental.MessageRequest
-                        })
+                    this.requestRental.ModelId.toString();
+                    console.log("ererer : ", this.requestRental.ModelId)
+                    const response = axios.post('https://localhost:7045/api/request/SendRentalRequest', this.requestRental )
                     console.log(response.data);
                 }
                

@@ -77,11 +77,28 @@
             async sendRequestRental(e) {
                 e.preventDefault();
                 try {
+                    const response = await fetch('https://localhost:7045/api/request/SendRentalRequest', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(this.requestRental)
+                    });
+                    /////////
+                    //const response = axios.post('https://localhost:7045/api/request/SendRentalRequest', this.requestRental )
+                    //console.log(response.data);
 
-                    this.requestRental.ModelId.toString();
-                    console.log("ererer : ", this.requestRental.ModelId)
-                    const response = axios.post('https://localhost:7045/api/request/SendRentalRequest', this.requestRental )
-                    console.log(response.data);
+                    if (response.ok) {
+                       
+                        // Gérer la réponse du serveur ici
+                       
+                        console.log(response); // Utilisez les données renvoyées par le serveur
+                    } else {
+                       
+                        // Gérer les erreurs ici
+                        console.error('Échec de la requête : ' + response.status);
+                    }
+                
                 }
                
                     catch (error) {
@@ -89,28 +106,7 @@
                         console.error('Échec de la requête : ' + error);
                   
                 }
-                //try {
-                //    const response = await fetch('https://localhost:7045/SendRentalRequest', {
-                //        method: 'POST',
-                //        headers: {
-                //            'Content-Type': 'application/json;'
-                //        },
-                //        body:  JSON.stringify(this.requestRental)
-                       
-                //    });
-                //    console.log("this.requestRental : ", this.requestRental)
-                //    if (response.ok) {
-                //        // Gérer la réponse du serveur ici
-                //        const responseData = await response.json();
-                //        console.log(responseData); // Utilisez les données renvoyées par le serveur
-                //    } else {
-                //        // Gérer les erreurs ici
-                //        console.error('Échec de la requête : ' + response.status);
-                //    }
-                //} catch (error) {
-                //    // Gérer les erreurs réseau ou autres erreurs ici
-                //    console.error('Erreur de réseau : ' + error);
-                //}
+               
             }
         },
         mounted() {

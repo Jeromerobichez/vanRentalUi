@@ -19,7 +19,7 @@
                 <input type="hidden" id="modelId" name="modelId" :value="selectedModelId">
 
                 <label for="message">Message :</label>
-                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+                <textarea id="message" name="message" rows="10" cols="20" ></textarea><br><br>
 
                 <input type="submit" value="Envoyer">
             </form>
@@ -115,5 +115,8 @@
         width: 100%;
         z-index: 2;
         background-color: rgba(0,0,0,0.8);
+    }
+    #message{
+        width: 60%;
     }
 </style>

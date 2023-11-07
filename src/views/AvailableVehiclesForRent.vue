@@ -1,12 +1,15 @@
 <template>
     <div class="">
         <h1>Page ou apparaissent les véhicules aux dates demandées</h1>
-        <p>Nous avons X modèle de véhicule disponible sur vos dates :</p>
+        <p>
+            Nous avons {{availableVehicles.modelsAvailable.length}} modèle(s) de véhicule disponible du <strong>{{dateDepart}}</strong> au <strong>{{dateRetour}}</strong>
+        </p>
         <!--<VehiclePresentationComponent v-if="modelsData" modelData="availableVehicles.modelsAvailable" />-->
         <div v-if="availableVehicles" v-for="model in availableVehicles.modelsAvailable" class="card-vehicle">
             <div class="card-vehcile-text">
-                <h2>{{model.name}} </h2>
-                <p> Nombre de places : {{model.pax}}</p>
+                <h2>{{model.name
+            }} </h2>
+<p> Nombre de places : {{model.pax}}</p>
                 <p> Contenance du réservoir : {{model.gas_tank}}</p>
                 <p> Prix par jour : {{model.price_per_day}}</p>
                 <p> Prix total pour cette période : {{model.rentalPrice}}</p>
@@ -23,7 +26,9 @@
         data() {
             return {
                 availableVehicles: [],
-                availableModelsVan: []
+                availableModelsVan: [],
+                dateDepart: "",
+                dateRetour: ""
             }
         }, 
         components: {
@@ -35,6 +40,9 @@
                 const response = await fetch(url);
                 this.availableVehicles = await response.json()
                 console.log("this.availableVehicles : ", this.availableVehicles)
+                this.dateDepart = new Date(this.$route.query.depart).toLocaleDateString('fr')
+                this.dateRetour = new Date(this.$route.query.retour).toLocaleDateString('fr')
+               
             }
         },
         created() {

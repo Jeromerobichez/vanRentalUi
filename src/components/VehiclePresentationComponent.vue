@@ -19,34 +19,35 @@
     <div class="contact-modal" v-if="myModalIsOpen">
         <form method="post">
             <label for="dateDepart">Date de départ :</label>
-            <input type="date" id="dateDepart" name="dateDepart" v-model="requestRental.dateDepart" required><br><br>
+            <input type="date" id="dateDepart" name="dateDepart" v-model="requestRental.DepartureDateRequested" required><br><br>
 
             <label for="dateRetour">Date de retour :</label>
-            <input type="date" id="dateRetour" name="dateRetour" :value="this.$route.query.retour" required><br><br>
+            <input type="date" id="dateRetour" name="dateRetour" :value="this.$route.query.ReturnDateRequested" required><br><br>
 
             <label for="modeleVehicule">Modèle de véhicule :</label>
-            <input type="text" id="modeleVehicule" name="modeleVehicule" v-model="requestRental.modeleVehicule" required><br><br>
+            <input type="text" id="modeleVehicule" name="modeleVehicule" v-model="requestRental.ModelVehicleRequested" required><br><br>
 
-            <input type="hidden" id="modelId" name="modelId" v-model="requestRental.id">
+            <input type="hidden" id="modelId" name="modelId" v-model="requestRental.ModelId">
 
             <label for="message">Message :</label>
-            <textarea v-model="requestRental.message" id="message" name="message" rows="10" cols="20"></textarea><br><br>
+            <textarea v-model="requestRental.MessageRequest" id="message" name="message" rows="10" cols="20"></textarea><br><br>
 
-            <input type="submit" value="Envoyer">
+            <input @click="sendRequestRental" type="submit" value="Envoyer">
         </form>
     </div>
 </template>
 <script>
+    import axios from 'axios';
     export default {
         data() {
             return {
                 myModalIsOpen: false,
                 requestRental: {
-                    dateDepart: this.$route.query.depart,
-                    dateRetour: this.$route.query.retour,
-                    modeleVehicule: this.modelData.name,
-                    id: this.modelData.id,
-                    message: ''
+                    DepartureDateRequested: this.$route.query.depart,
+                    ReturnDateRequested: this.$route.query.retour,
+                    ModelVehicleRequested: this.modelData.name,
+                    ModelId: this.modelData.id,
+                    MessageRequest: ''
                 }
             }
         },
@@ -72,6 +73,50 @@
             },
             closeMyModal() {
                 this.myModalIsOpen = false
+            },
+            async sendRequestRental(e) {
+                e.preventDefault();
+                try {
+
+
+                    const response = axios.post('https://localhost:7045/SendRentalRequest',
+                        {
+                            DepartureDateRequested: this.requestRental.DepartureDateRequested.toString(),
+                            ReturnDateRequested: this.requestRental.ReturnDateRequested,
+                            ModelVehicleRequested: this.requestRental.ModelVehicleRequested,
+                            ModelId: this.requestRental.ModelId,
+                            MessageRequest: this.requestRental.MessageRequest
+                        })
+                    console.log(response.data);
+                }
+               
+                    catch (error) {
+                        // Gérer les erreurs ici
+                        console.error('Échec de la requête : ' + error);
+                  
+                }
+                //try {
+                //    const response = await fetch('https://localhost:7045/SendRentalRequest', {
+                //        method: 'POST',
+                //        headers: {
+                //            'Content-Type': 'application/json;'
+                //        },
+                //        body:  JSON.stringify(this.requestRental)
+                       
+                //    });
+                //    console.log("this.requestRental : ", this.requestRental)
+                //    if (response.ok) {
+                //        // Gérer la réponse du serveur ici
+                //        const responseData = await response.json();
+                //        console.log(responseData); // Utilisez les données renvoyées par le serveur
+                //    } else {
+                //        // Gérer les erreurs ici
+                //        console.error('Échec de la requête : ' + response.status);
+                //    }
+                //} catch (error) {
+                //    // Gérer les erreurs réseau ou autres erreurs ici
+                //    console.error('Erreur de réseau : ' + error);
+                //}
             }
         },
         mounted() {

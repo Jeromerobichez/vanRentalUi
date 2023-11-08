@@ -95,6 +95,8 @@
                     catch (error) {
                         console.error('Échec de la requête : ' + error);
                 }
+                this.myModalIsOpen = false;
+
             }
         },
         mounted() {

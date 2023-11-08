@@ -1,36 +1,18 @@
 <template>
     <div class="">
         <h1>Page ou apparaissent les véhicules aux dates demandées</h1>
-        <p>
+        <p v-if="availableVehicles.modelsAvailable">
             Nous avons {{availableVehicles.modelsAvailable.length}} modèle(s) de véhicule disponible du <strong>{{dateDepart}}</strong> au <strong>{{dateRetour}}</strong>
         </p>
         <div v-for="model in availableVehicles.modelsAvailable">
             <VehiclePresentationComponent v-if="availableVehicles.modelsAvailable" :modelData="model" />
         </div>
-        
 
         <div class="modal-overlay"
              v-if="isModalOpen"
              @click="closeContactModal">
         </div>
 
-        <!--<div class="card-vehicle"
-             v-if="availableVehicles"
-             v-for="model in availableVehicles.modelsAvailable"
-             
-             @click="openContactModal(model.id, model.name)"
-           >
-            <div class="card-vehcile-text">
-                <h2>{{model.name }} </h2>
-<p> Nombre de places : {{model.pax}}</p>
-                <p> Contenance du réservoir : {{model.gas_tank}}</p>
-                <p> Prix par jour : {{model.price_per_day}}</p>
-                <p> Prix total pour cette période : {{model.rentalPrice}}</p>
-            </div>
-            <div class="card-vehcile-div-image">
-                <img class="card-vehcile-img" :src="model.picture_url" />
-            </div>
-        </div>-->
     </div>
 </template>
 <script>

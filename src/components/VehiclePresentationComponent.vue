@@ -53,7 +53,6 @@
         },
         props: {
             modelData: Object
-          
         },
         methods: {
             openContactModal(id, modelName) {
@@ -84,29 +83,18 @@
                         },
                         body: JSON.stringify(this.requestRental)
                     });
-                    /////////
-                    //const response = axios.post('https://localhost:7045/api/request/SendRentalRequest', this.requestRental )
-                    //console.log(response.data);
 
                     if (response.ok) {
-                       
-                        // Gérer la réponse du serveur ici
-                       
-                        console.log(response); // Utilisez les données renvoyées par le serveur
+
+                        console.log("succès de la requète : ", response); 
                     } else {
-                       
-                        // Gérer les erreurs ici
+
                         console.error('Échec de la requête : ' + response.status);
                     }
-                
                 }
-               
                     catch (error) {
-                        // Gérer les erreurs ici
                         console.error('Échec de la requête : ' + error);
-                  
                 }
-               
             }
         },
         mounted() {

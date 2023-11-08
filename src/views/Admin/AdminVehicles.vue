@@ -44,7 +44,6 @@
                 const url = 'https://localhost:7045/api/vehicles/GetAllVehicles'
                 const allVehicles = await fetch(url)
                 this.vehiclesList = await allVehicles.json()
-                console.log('vehiclesList : ', this.vehiclesList)
             }
         },
         mounted() {

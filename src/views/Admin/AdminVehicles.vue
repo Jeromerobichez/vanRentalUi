@@ -33,28 +33,28 @@
         <div class="contact-modal" v-if="isModalOpen">
             <form  method="post">
                 <label for="id">ID:</label>
-                <input type="text" id="id" name="id" v-model="vehicle.Id"><br><br>
+                <input type="text" id="id" name="id" v-model="vehicle.id"><br><br>
 
                 <label for="name">Nom:</label>
                 <input type="text" id="name" name="name"  v-model="vehicle.name"><br><br>
 
                 <label for="km">Kilométrage:</label>
-                <input type="text" id="km" name="km" v-model="vehicle.Km" ><br><br>
+                <input type="text" id="km" name="km" v-model="vehicle.km" ><br><br>
 
                 <label for="color_name">Couleur:</label>
                 <input type="text" id="color_name" name="color_name" v-model="vehicle.color_name"><br><br>
 
                 <label for="automatic_gear">Boîte automatique:</label>
-                <input type="checkbox" id="automatic_gear" name="automatic_gear" v-model="vehicle.AutomaticGear"><br><br>
+                <input type="checkbox" id="automatic_gear" name="automatic_gear" v-model="vehicle.automatic_gear"><br><br>
 
                 <label for="hasBeenSold">Vendu:</label>
                 <input type="checkbox" id="hasBeenSold" name="hasBeenSold" v-model="vehicle.hasBeenSold"><br><br>
 
                 <label for="registration_date">Date d'enregistrement:</label>
-                <input type="text" id="registration_date" name="registration_date" v-model="vehicle.RegistrationDate"><br><br>
+                <input type="date" id="registration_date" name="registration_date" v-model="vehicle.registration_date"><br><br>
 
                 <label for="comments">Commentaires:</label>
-                <textarea  v-model="vehicle.Comments" id="comments" name="comments">{{vehicle.comments}}</textarea><br><br>
+                <textarea  v-model="vehicle.comments" id="comments" name="comments">{{vehicle.comments}}</textarea><br><br>
 
                 <input  @click="submitForm" type="submit" value="Soumettre la modification du véhicule">
             </form>
@@ -71,14 +71,6 @@
             return {
                 vehiclesList: [],
                 vehicle: {
-                    Id: "",
-                    name: "",
-                    Km: "",
-                    color_name: "",
-                    AutomaticGear: "",
-                    HasBeenSold: "",
-                    RegistrationDate: "",
-                    Comments: "",
                 },
             isModalOpen: false
             }
@@ -94,13 +86,10 @@
                 
                 this.isModalOpen = true
   
-                this.vehicle.Id = this.vehiclesList[index].id  
-                this.vehicle.AutomaticGear = this.vehiclesList[index].automatic_gear
-                this.vehicle.HasBeenSold = this.vehiclesList[index].hasBeenSold
-                this.vehicle.RegistrationDate = this.vehiclesList[index].registration_date
-                this.vehicle.Comments = this.vehiclesList[index].comments
-                this.vehicle.ModelId = this.vehiclesList[index].model_id
-                this.vehicle.ColorId = this.vehiclesList[index].color_id
+                this.vehicle = this.vehiclesList[index]
+                this.vehicle.registration_date = this.vehicle.registration_date.split('T')[0];
+                console.log("this.vehicle : ", this.vehicle)
+                
             },
             closeModal() {
                 this.isModalOpen = false
@@ -110,14 +99,14 @@
                 const url = "https://localhost:7045/api/vehicles/UpdateVehicle"
              
                 const dataToSend = {
-                    Id: this.vehicle.Id,
-                    RegistrationDate: this.vehicle.RegistrationDate,
-                    Km: parseInt(this.vehicle.Km),
-                    AutomaticGear: this.vehicle.AutomaticGear,
-                    HasBeenSold: this.vehicle.HasBeenSold,
-                    Comments: this.vehicle.Comments,
-                    ModelId: this.vehicle.ModelId,
-                    ColorId: this.vehicle.ColorId,
+                    Id: this.vehicle.id,
+                    RegistrationDate: new Date(this.vehicle.registration_date),
+                    Km: parseInt(this.vehicle.km),
+                    AutomaticGear: this.vehicle.automatic_gear,
+                    HasBeenSold: this.vehicle.hasBeenSold,
+                    Comments: this.vehicle.comments,
+                    ModelId: this.vehicle.model_id,
+                    ColorId: this.vehicle.color_id,
                 }
           
                 const response = await fetch(url, {
@@ -137,8 +126,12 @@
                 }
             }
         },
+         created() {
+             this.fectchAllVehicles();
+          
+        },
         mounted() {
-            this.fectchAllVehicles();
+        
         }
     }
 </script>

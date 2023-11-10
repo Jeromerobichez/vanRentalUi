@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <h1>Adminsitration des CLIENTS</h1>
-       <table border="1">
+       <!--<table border="1">
             <tr>
                 <th>id</th>
                 <th>lastname</th>
@@ -21,7 +21,8 @@
                 <td> <img @click="editClient(index)" height="20" src="@/assets/editer.png" /> </td>
                 <td> <img height="20" src="@/assets/supprimer.png" /> </td>
             </tr>
-        </table>
+        </table>-->
+        <AdminTable :columns="clientsColumns" :items="clientsList" />
         <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
        <div v-if="isEditModalOpen" class="edit-modal">
            <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm"  />
@@ -30,10 +31,12 @@
 </template>
 <script>
     import EditForm from '@/components/EditForm.vue'
+    import AdminTable from '@/components/AdminTable.vue'
     export default {
         data() {
             return {
                 clientsList: [],
+                clientsColumns: [],
                 fields: {},
                 formData: {},
                 isEditModalOpen: false,
@@ -48,13 +51,18 @@
             }
         },
         components: {
-            EditForm
+            EditForm,
+            AdminTable
         },
         methods: {
             async fectchAllClients() {
                 const url = 'https://localhost:7045/api/clients/GetAllClients'
                 const allClients = await fetch(url)
                 this.clientsList = await allClients.json()
+
+                this.clientsColumns = Object.keys(this.clientsList[0])
+
+
             },
             async editClient(index) {
                 this.formData.Id = this.clientsList[index].id

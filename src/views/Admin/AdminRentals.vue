@@ -33,7 +33,8 @@
     export default {
         data() {
             return {
-               rentalsList: []
+                rentalsList: [],
+                rentalsColumns: ["id", "departure_date",	"return_date",	"firstname",	"lastname","model"]
             }
         },
         methods: {

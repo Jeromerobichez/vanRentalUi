@@ -9,7 +9,7 @@
             <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm" />
         </div>
         <div class="deleteModal" v-if="deleteModal">
-            <h2> Vous etes sur le point de supprimer le client dont l'id est {{deleteId}} </h2>
+            <h2> Vous etes sur le point de supprimer le client dont l'id est : {{idToDelete}} </h2>
             <p> Etes vous sur ce choix ? </p>
             <button @click="confirmSuppression"> Confirmer la suppression</button>
         </div>

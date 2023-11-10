@@ -20,15 +20,12 @@
                 <td> {{client.mail }} </td>
                 <td> <img @click="editClient(index)" height="20" src="@/assets/editer.png" /> </td>
                 <td> <img height="20" src="@/assets/supprimer.png" /> </td>
-
-
             </tr>
         </table>
         <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
        <div v-if="isEditModalOpen" class="edit-modal">
            <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm"  />
-       </div>
-       
+       </div> 
     </div>
 </template>
 <script>
@@ -41,15 +38,13 @@
                 formData: {},
                 isEditModalOpen: false,
                 isOverlayOpen: false,
-                clientFields: {
-                    
+                clientFields: {   
                     Id: { type: 'text', label: 'ID' },
                     Lastname: { type: 'text', label: 'Nom' },
                     Firstname: { type: 'text', label: 'Prénom' },
                     Tel: { type: 'text', label: 'telephone' },
                     Mail: { type: 'email', label: 'email' },
                 },
-
             }
         },
         components: {
@@ -70,8 +65,6 @@
 
                 this.isEditModalOpen = true;
                 this.isOverlayOpen = true;
-                console.log("this.formData in editClient : ", this.formData)
-                
             },
             overlayClick() {
                 this.isEditModalOpen = false;
@@ -88,8 +81,6 @@
                     body: JSON.stringify(dataToSend)
                 })
                 if (response.ok) {
-
-                    console.log("succès de la requète : ", response);
                     this.closeModal()
                 } else {
 
@@ -106,9 +97,6 @@
         mounted() {
             this.fectchAllClients();
         },
-        updated() {
-            console.log("this.formData in AdminClient: ", this.formData )
-        }
     }
 </script>
 <style>

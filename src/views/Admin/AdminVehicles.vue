@@ -30,7 +30,12 @@
 
             </tr>
         </table>
-        <div class="contact-modal" v-if="isModalOpen">
+        <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
+        <div v-if="isModalOpen" class="vehicle-modal">
+            <EditForm :fields="vehicleFields" :formData="vehicle" :submitForm="submitForm" />
+        </div>
+
+        <!--<div class="contact-modal" v-if="isModalOpen">
             <form  method="post">
                 <label for="id">ID:</label>
                 <input type="text" id="id" name="id" v-model="vehicle.id"><br><br>
@@ -58,45 +63,68 @@
 
                 <input  @click="submitForm" type="submit" value="Soumettre la modification du véhicule">
             </form>
-        </div>
+        </div>-->
         <div class="deleteModal" v-if="deleteModal">
             <h2> Vous etes sur le point de supprimer le véhicule dont l'id est {{vehicle.id}} </h2>
             <p> Etes vous sur ce choix ? </p>
             <button @click="suppression"> Confirmer la supprssion</button>
         </div>
-        <div class="modal-overlay"
+        <!--<div class="modal-overlay"
              v-if="isOverlayOpen"
              @click="closeModal">
-        </div>
+        </div>-->
     </div>
 </template>
 <script>
+    import EditForm from '@/components/EditForm.vue'
     export default {
         data() {
             return {
                 vehiclesList: [],
                 vehicle: {
                 },
+                formData: {},
                 isModalOpen: false,
                 deleteModal: false,
                 isOverlayOpen: false,
+                vehicleFields: {
+                    Id: { type: 'number', label: 'Id' },
+                    RegistrationDate: { type: 'date', label: 'Date d\'immatriculation' },
+                    Km: { type: 'text', label: 'Kilométrage :' },
+                    AutomaticGear: { type: 'checkbox', label: 'Boite de vitesse automatique ' },
+                    HasBeenSold: { type: 'checkbox', label: 'Vendu ? :' },
+                    Comments: { type: 'textarea', label: 'Commentaires : ' },
+                    ModelId: { type: 'hidden', label: 'ModelId' },
+                    ColorId: { type: 'hidden', label: 'ColorId' },
+                },
             }
+        },
+        components: {
+            EditForm
         },
         methods: {
           async fectchAllVehicles() {
                 const url = 'https://localhost:7045/api/vehicles/GetAllVehicles'
                 const allVehicles = await fetch(url)
                 this.vehiclesList = await allVehicles.json()
-                console.log("this.vehiclesList :: ", this.vehiclesList)
+              
             },
             handleEdit(index) {
                 
                 this.isModalOpen = true
                 this.isOverlayOpen = true
   
-                this.vehicle = this.vehiclesList[index]
-                this.vehicle.registration_date = this.vehicle.registration_date.split('T')[0];
-                
+                this.vehicle = {
+                    Id: this.vehiclesList[index].id,
+                    RegistrationDate: this.vehiclesList[index].registration_date.split('T')[0],
+                    Km: parseInt(this.vehiclesList[index].km),
+                    AutomaticGear: this.vehiclesList[index].automatic_gear,
+                    HasBeenSold: this.vehiclesList[index].hasBeenSold,
+                    Comments: this.vehiclesList[index].comments,
+                    ModelId: this.vehiclesList[index].model_id,
+                    ColorId: this.vehiclesList[index].color_id,
+                }
+             
             },
             handleDelete(id) {
                 this.deleteModal = true;
@@ -107,21 +135,16 @@
                 this.isOverlayOpen = false
                 this.deleteModal = false;
             },
-            async submitForm(e) {
-                e.preventDefault();
+            overlayClick() {
+                this.isModalOpen = false;
+                this.isOverlayOpen = false
+            },
+            async submitForm( dataToSend) {
+               
                 const url = "https://localhost:7045/api/vehicles/UpdateVehicle"
-             
-                const dataToSend = {
-                    Id: this.vehicle.id,
-                    RegistrationDate: new Date(this.vehicle.registration_date),
-                    Km: parseInt(this.vehicle.km),
-                    AutomaticGear: this.vehicle.automatic_gear,
-                    HasBeenSold: this.vehicle.hasBeenSold,
-                    Comments: this.vehicle.comments,
-                    ModelId: this.vehicle.model_id,
-                    ColorId: this.vehicle.color_id,
-                }
-          
+ 
+                dataToSend.Km = parseInt(dataToSend.Km)
+  
                 const response = await fetch(url, {
                     method: 'PATCH',
                     headers: {
@@ -134,6 +157,7 @@
 
                     console.log("succès de la requète : ", response);
                     this.closeModal()
+                    this.fectchAllVehicles()
                 } else {
 
                     console.error('Échec de la requête : ' + response.status);
@@ -142,10 +166,6 @@
         },
          created() {
              this.fectchAllVehicles();
-          
-        },
-        mounted() {
-        
         }
     }
 </script>
@@ -153,7 +173,7 @@
     .icone-editer{
         cursor: pointer;
     }
-    .contact-modal {
+    .vehicle-modal {
         background-color: green;
         height: 75vh;
         width: 75vh;

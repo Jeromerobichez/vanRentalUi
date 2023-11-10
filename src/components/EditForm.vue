@@ -1,7 +1,6 @@
-<!-- EditForm.vue -->
 
 <template>
-    <form @submit.prevent="submission(formData)">
+    <form @submit.prevent="submitForm(formData)">
         <label v-for="(field, fieldName) in fields" :key="fieldName" :for="fieldName">
             {{ field.label }}:
             <template v-if="field.type === 'checkbox'">
@@ -10,12 +9,17 @@
             <template v-else-if="field.type === 'textarea'">
                 <textarea :id="fieldName" :name="fieldName" v-model="formData[fieldName]"></textarea>
             </template>
+            <template v-else-if="field.type === 'date'">
+                <input type="date" :id="fieldName" :name="fieldName" v-model="formData[fieldName]">
+            </template>
+            <template v-else-if="field.type === 'number'">
+                <input type="number" :id="fieldName" :name="fieldName" v-model="formData[fieldName]">
+            </template>
             <template v-else>
                 <input type="{{ field.type }}" :id="fieldName" :name="fieldName" v-model="formData[fieldName]">
             </template>
             <br><br>
         </label>
-
         <input type="submit" value="Soumettre la modification du véhicule">
     </form>
 </template>
@@ -34,21 +38,7 @@
             submitForm: {
                 type: Function,
                 required: true,
-            },
-            //closeModal: {
-            //    type: Function,
-            //    required: true,
-            //}
-        },
-        methods: {
-            submission(formData) {
-                this.$props.submitForm(formData);
-              /*  this.$props.closeModal();*/
             }
         },
-        mounted() {
-       /*     console.log("formData : ", this.$props.formData)*/
-            console.log("fields in Edit form : ", this.$props.submitForm)
-        }
     };
 </script>

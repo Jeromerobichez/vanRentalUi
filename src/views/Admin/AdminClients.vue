@@ -22,7 +22,7 @@
                 <td> <img height="20" src="@/assets/supprimer.png" /> </td>
             </tr>
         </table>-->
-        <AdminTable :columns="clientsColumns" :items="clientsList" />
+        <AdminTable :columns="clientsColumns" :items="clientsList" :openEditModal="editClient" />
         <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
        <div v-if="isEditModalOpen" class="edit-modal">
            <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm"  />

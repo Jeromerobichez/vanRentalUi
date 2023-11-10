@@ -32,7 +32,7 @@ VehiclePresentationComponent
         methods: {
             async fetchVehicles() {
                 console.log('début')
-                const url = 'https://localhost:7045/api/vanRental/GetAllModels'
+                const url = 'https://localhost:7045/api/models/GetAllModels'
                 console.log('url')
                 const response = await fetch(url);
                 console.log('fetch')

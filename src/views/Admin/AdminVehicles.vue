@@ -25,7 +25,7 @@
                 <td> {{vehicle.registration_date }} </td>
                 <td> {{vehicle.comments }} </td>
                 <td> <img class="icone-editer" @click="handleEdit(index)" height="20" src="@/assets/editer.png" /> </td>
-                <td> <img height="20" src="@/assets/supprimer.png" /> </td>
+                <td> <img height="20" @click="handleDelete(vehicle.id)" src="@/assets/supprimer.png" /> </td>
 
 
             </tr>
@@ -59,8 +59,13 @@
                 <input  @click="submitForm" type="submit" value="Soumettre la modification du véhicule">
             </form>
         </div>
+        <div class="deleteModal" v-if="deleteModal">
+            <h2> Vous etes sur le point de supprimer le véhicule dont l'id est {{vehicle.id}} </h2>
+            <p> Etes vous sur ce choix ? </p>
+            <button @click="suppression"> Confirmer la supprssion</button>
+        </div>
         <div class="modal-overlay"
-             v-if="isModalOpen"
+             v-if="isOverlayOpen"
              @click="closeModal">
         </div>
     </div>
@@ -72,7 +77,9 @@
                 vehiclesList: [],
                 vehicle: {
                 },
-            isModalOpen: false
+                isModalOpen: false,
+                deleteModal: false,
+                isOverlayOpen: false,
             }
         },
         methods: {
@@ -85,14 +92,20 @@
             handleEdit(index) {
                 
                 this.isModalOpen = true
+                this.isOverlayOpen = true
   
                 this.vehicle = this.vehiclesList[index]
                 this.vehicle.registration_date = this.vehicle.registration_date.split('T')[0];
-                console.log("this.vehicle : ", this.vehicle)
                 
+            },
+            handleDelete(id) {
+                this.deleteModal = true;
+                this.isOverlayOpen = true;
             },
             closeModal() {
                 this.isModalOpen = false
+                this.isOverlayOpen = false
+                this.deleteModal = false;
             },
             async submitForm(e) {
                 e.preventDefault();
@@ -120,6 +133,7 @@
                 if (response.ok) {
 
                     console.log("succès de la requète : ", response);
+                    this.closeModal()
                 } else {
 
                     console.error('Échec de la requête : ' + response.status);
@@ -140,7 +154,7 @@
         cursor: pointer;
     }
     .contact-modal {
-        background-color: red;
+        background-color: green;
         height: 75vh;
         width: 75vh;
         position: fixed;
@@ -160,5 +174,17 @@
         z-index: 2;
         background-color: rgba(0,0,0,0.8);
         overflow: hidden;
+    }
+    .deleteModal {
+        background-color: red;
+        height: 75vh;
+        width: 75vh;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
     }
 </style>

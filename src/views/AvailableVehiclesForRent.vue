@@ -41,7 +41,7 @@
         },
         methods: {
             async fetchAvailableVehicles() {
-                const url = `https://localhost:7045/api/vanRental/GetAvailableVehicles?departureDate=${this.$route.query.depart}&returnDate=${this.$route.query.retour}`
+                const url = `https://localhost:7045/api/vehicles/GetAvailableVehicles?departureDate=${this.$route.query.depart}&returnDate=${this.$route.query.retour}`
                 const response = await fetch(url);
                 this.availableVehicles = await response.json()
                 console.log("this.availableVehicles : ", this.availableVehicles)

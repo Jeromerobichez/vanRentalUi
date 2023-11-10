@@ -1,89 +1,95 @@
 <template>
     <div class="">
         <h1>Administration des VEHICULES</h1>
-        <table border="1">
-            <tr>
-                <th>id</th>
-                <th>name</th>
-                <th>km</th>
-                <th>color_name</th>
-                <th>automatic_gear</th>
-                <th>hasBeenSold</th>
-                <th>registration</th>
-                <th>comments</th>
-                <th>éditer</th>
-                <th>supprimer</th>
-            </tr>
+        <!--<table border="1">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>km</th>
+            <th>color_name</th>
+            <th>automatic_gear</th>
+            <th>hasBeenSold</th>
+            <th>registration</th>
+            <th>comments</th>
+            <th>éditer</th>
+            <th>supprimer</th>
+        </tr>
 
-            <tr v-for="(vehicle, index) in vehiclesList">
-                <td> {{vehicle.id }} </td>
-                <td> {{vehicle.name }} </td>
-                <td> {{vehicle.km}} </td>
-                <td> {{ vehicle.color_name}} </td>
-                <td> {{vehicle.automatic_gear }} </td>
-                <td> {{vehicle.hasBeenSold }} </td>
-                <td> {{vehicle.registration_date }} </td>
-                <td> {{vehicle.comments }} </td>
-                <td> <img class="icone-editer" @click="handleEdit(index)" height="20" src="@/assets/editer.png" /> </td>
-                <td> <img height="20" @click="handleDelete(vehicle.id)" src="@/assets/supprimer.png" /> </td>
+        <tr v-for="(vehicle, index) in vehiclesList">
+            <td> {{vehicle.id }} </td>
+            <td> {{vehicle.name }} </td>
+            <td> {{vehicle.km}} </td>
+            <td> {{ vehicle.color_name}} </td>
+            <td> {{vehicle.automatic_gear }} </td>
+            <td> {{vehicle.hasBeenSold }} </td>
+            <td> {{vehicle.registration_date }} </td>
+            <td> {{vehicle.comments }} </td>
+            <td> <img class="icone-editer" @click="handleEdit(index)" height="20" src="@/assets/editer.png" /> </td>
+            <td> <img height="20" @click="handleDelete(vehicle.id)" src="@/assets/supprimer.png" /> </td>
 
 
-            </tr>
-        </table>
+        </tr>
+    </table>-->
+
+        <AdminTable :columns="vehiclesColumns" :items="vehiclesList" :openEditModal="editVehicle" :handleDelete="handleDelete" />
+
         <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
         <div v-if="isModalOpen" class="vehicle-modal">
             <EditForm :fields="vehicleFields" :formData="vehicle" :submitForm="submitForm" />
         </div>
 
         <!--<div class="contact-modal" v-if="isModalOpen">
-            <form  method="post">
-                <label for="id">ID:</label>
-                <input type="text" id="id" name="id" v-model="vehicle.id"><br><br>
+        <form  method="post">
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" v-model="vehicle.id"><br><br>
 
-                <label for="name">Nom:</label>
-                <input type="text" id="name" name="name"  v-model="vehicle.name"><br><br>
+            <label for="name">Nom:</label>
+            <input type="text" id="name" name="name"  v-model="vehicle.name"><br><br>
 
-                <label for="km">Kilométrage:</label>
-                <input type="text" id="km" name="km" v-model="vehicle.km" ><br><br>
+            <label for="km">Kilométrage:</label>
+            <input type="text" id="km" name="km" v-model="vehicle.km" ><br><br>
 
-                <label for="color_name">Couleur:</label>
-                <input type="text" id="color_name" name="color_name" v-model="vehicle.color_name"><br><br>
+            <label for="color_name">Couleur:</label>
+            <input type="text" id="color_name" name="color_name" v-model="vehicle.color_name"><br><br>
 
-                <label for="automatic_gear">Boîte automatique:</label>
-                <input type="checkbox" id="automatic_gear" name="automatic_gear" v-model="vehicle.automatic_gear"><br><br>
+            <label for="automatic_gear">Boîte automatique:</label>
+            <input type="checkbox" id="automatic_gear" name="automatic_gear" v-model="vehicle.automatic_gear"><br><br>
 
-                <label for="hasBeenSold">Vendu:</label>
-                <input type="checkbox" id="hasBeenSold" name="hasBeenSold" v-model="vehicle.hasBeenSold"><br><br>
+            <label for="hasBeenSold">Vendu:</label>
+            <input type="checkbox" id="hasBeenSold" name="hasBeenSold" v-model="vehicle.hasBeenSold"><br><br>
 
-                <label for="registration_date">Date d'enregistrement:</label>
-                <input type="date" id="registration_date" name="registration_date" v-model="vehicle.registration_date"><br><br>
+            <label for="registration_date">Date d'enregistrement:</label>
+            <input type="date" id="registration_date" name="registration_date" v-model="vehicle.registration_date"><br><br>
 
-                <label for="comments">Commentaires:</label>
-                <textarea  v-model="vehicle.comments" id="comments" name="comments">{{vehicle.comments}}</textarea><br><br>
+            <label for="comments">Commentaires:</label>
+            <textarea  v-model="vehicle.comments" id="comments" name="comments">{{vehicle.comments}}</textarea><br><br>
 
-                <input  @click="submitForm" type="submit" value="Soumettre la modification du véhicule">
-            </form>
-        </div>-->
+            <input  @click="submitForm" type="submit" value="Soumettre la modification du véhicule">
+        </form>
+    </div>-->
         <div class="deleteModal" v-if="deleteModal">
-            <h2> Vous etes sur le point de supprimer le véhicule dont l'id est {{vehicle.id}} </h2>
+            <h2> Vous etes sur le point de supprimer le véhicule dont l'id est {{deleteId}} </h2>
             <p> Etes vous sur ce choix ? </p>
             <button @click="suppression"> Confirmer la supprssion</button>
         </div>
         <!--<div class="modal-overlay"
-             v-if="isOverlayOpen"
-             @click="closeModal">
-        </div>-->
+         v-if="isOverlayOpen"
+         @click="closeModal">
+    </div>-->
     </div>
 </template>
 <script>
     import EditForm from '@/components/EditForm.vue'
+    import AdminTable from '@/components/AdminTable.vue'
     export default {
         data() {
             return {
                 vehiclesList: [],
+                vehiclesColumns: [],
                 vehicle: {
                 },
                 formData: {},
+                deleteId: "",
                 isModalOpen: false,
                 deleteModal: false,
                 isOverlayOpen: false,
@@ -100,16 +106,27 @@
             }
         },
         components: {
-            EditForm
+            EditForm,
+            AdminTable
         },
         methods: {
           async fectchAllVehicles() {
                 const url = 'https://localhost:7045/api/vehicles/GetAllVehicles'
                 const allVehicles = await fetch(url)
                 this.vehiclesList = await allVehicles.json()
-              
+                this.vehiclesColumns = [
+                    "id",
+                    "km",
+                    "registration_date",
+                    "automatic_gear",
+                    "color_name",
+                    'comments',
+                    "hasBeenSold",
+                    "name",
+
+ ]
             },
-            handleEdit(index) {
+            editVehicle(index) {
                 
                 this.isModalOpen = true
                 this.isOverlayOpen = true
@@ -127,6 +144,8 @@
              
             },
             handleDelete(id) {
+
+                this.deleteId = id
                 this.deleteModal = true;
                 this.isOverlayOpen = true;
             },
@@ -137,7 +156,8 @@
             },
             overlayClick() {
                 this.isModalOpen = false;
-                this.isOverlayOpen = false
+                this.isOverlayOpen = false;
+                this.deleteModal= false;
             },
             async submitForm( dataToSend) {
                

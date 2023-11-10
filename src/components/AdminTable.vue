@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th v-for="(column, index) in columns" :key="index">
-                    {{ column.field }}
+                    {{ column }}
                     <button @click="sortByColumn(column)">▲</button>
                 </th>
                 <th>éditer</th>
@@ -17,7 +17,7 @@
                     {{ item[column] }}
                 </td>
                 <td> <img @click="openEditModal(index)" height="20" src="@/assets/editer.png" /> </td>
-                <td> <img height="20" src="@/assets/supprimer.png" /> </td>
+                <td> <img @click="handleDelete(item.id)" height="20" src="@/assets/supprimer.png" /> </td>
             </tr>
         </tbody>
     </table>
@@ -37,6 +37,10 @@
             openEditModal: {
                 type: Function,
                 required: true,
+            },
+            handleDelete: {
+                type: Function,
+                required: false,
             }
         },
     };

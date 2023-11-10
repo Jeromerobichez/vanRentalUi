@@ -1,32 +1,18 @@
 <template>
     <div class="">
         <h1>Adminsitration des CLIENTS</h1>
-       <!--<table border="1">
-            <tr>
-                <th>id</th>
-                <th>lastname</th>
-                <th>firstname</th>
-                <th>tel</th>
-                <th>mail</th>
-                <th>éditer</th>
-                <th>supprimer</th>
-            </tr>
 
-            <tr v-for="(client, index) in clientsList">
-                <td> {{client.id }} </td>
-                <td> {{client.lastname }} </td>
-                <td> {{client.firstname}} </td>
-                <td> {{ client.tel}} </td>
-                <td> {{client.mail }} </td>
-                <td> <img @click="editClient(index)" height="20" src="@/assets/editer.png" /> </td>
-                <td> <img height="20" src="@/assets/supprimer.png" /> </td>
-            </tr>
-        </table>-->
-        <AdminTable :columns="clientsColumns" :items="clientsList" :openEditModal="editClient" />
+        <AdminTable :columns="clientsColumns" :items="clientsList" :openEditModal="editClient" :handleDelete="handleDelete" />
+
         <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
-       <div v-if="isEditModalOpen" class="edit-modal">
-           <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm"  />
-       </div> 
+        <div v-if="isEditModalOpen" class="edit-modal">
+            <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm" />
+        </div>
+        <div class="deleteModal" v-if="deleteModal">
+            <h2> Vous etes sur le point de supprimer le client dont l'id est {{deleteId}} </h2>
+            <p> Etes vous sur ce choix ? </p>
+            <button @click="confirmSuppression"> Confirmer la suppression</button>
+        </div>
     </div>
 </template>
 <script>
@@ -37,6 +23,8 @@
             return {
                 clientsList: [],
                 clientsColumns: [],
+                idToDelete: "",
+                deleteModal: false,
                 fields: {},
                 formData: {},
                 isEditModalOpen: false,
@@ -64,6 +52,13 @@
 
 
             },
+            handleDelete(id) {
+
+                console.log("deleted id : ", id)
+                this.idToDelete = id
+                this.deleteModal = true;
+                this.isOverlayOpen = true;
+            },
             async editClient(index) {
                 this.formData.Id = this.clientsList[index].id
                 this.formData.Lastname = this.clientsList[index].lastname
@@ -76,10 +71,10 @@
             },
             overlayClick() {
                 this.isEditModalOpen = false;
-                this.isOverlayOpen= false
+                this.isOverlayOpen = false;
+                this.deleteModal = false;
             },
             async submitForm(dataToSend) {
-                console.log("dataToSend in submitForm :: ", dataToSend)
                 const url = 'https://localhost:7045/api/clients/UpdateAClient'
                 const response = await fetch(url, {
                     method: 'PATCH',
@@ -99,8 +94,12 @@
 
                 this.isEditModalOpen = false;
                 this.isOverlayOpen = false;
+                this.deleteModal = false;
                 this.fectchAllClients();
             },
+            confirmSuppression() {
+                console.log("supprimer !")
+            }
         },
         mounted() {
             this.fectchAllClients();
@@ -109,7 +108,7 @@
 </script>
 <style>
     .edit-modal {
-        background-color: white;
+        background-color: pink;
         height: 75vh;
         width: 75vh;
         position: fixed;

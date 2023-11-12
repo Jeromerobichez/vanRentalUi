@@ -144,7 +144,7 @@
                 })
                 console.log("response : ", response)
                 if (response.ok) {
-                    console.log(" réservation supprimée avec succès !")
+                    console.log(" client supprimé avec succès !")
                     this.closeModal();
                 } else {
 

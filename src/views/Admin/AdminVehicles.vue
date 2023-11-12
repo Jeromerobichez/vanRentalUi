@@ -1,76 +1,23 @@
 <template>
     <div class="">
         <h1>Administration des VEHICULES</h1>
-        <!--<table border="1">
-        <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>km</th>
-            <th>color_name</th>
-            <th>automatic_gear</th>
-            <th>hasBeenSold</th>
-            <th>registration</th>
-            <th>comments</th>
-            <th>éditer</th>
-            <th>supprimer</th>
-        </tr>
 
-        <tr v-for="(vehicle, index) in vehiclesList">
-            <td> {{vehicle.id }} </td>
-            <td> {{vehicle.name }} </td>
-            <td> {{vehicle.km}} </td>
-            <td> {{ vehicle.color_name}} </td>
-            <td> {{vehicle.automatic_gear }} </td>
-            <td> {{vehicle.hasBeenSold }} </td>
-            <td> {{vehicle.registration_date }} </td>
-            <td> {{vehicle.comments }} </td>
-            <td> <img class="icone-editer" @click="handleEdit(index)" height="20" src="@/assets/editer.png" /> </td>
-            <td> <img height="20" @click="handleDelete(vehicle.id)" src="@/assets/supprimer.png" /> </td>
-
-
-        </tr>
-    </table>-->
-
+        <button class="create-button" @click="handleCreate"> Créer un nouveau véhicule </button>
         <AdminTable :columns="vehiclesColumns" :items="vehiclesList" :openEditModal="editVehicle" :handleDelete="handleDelete" />
 
-        <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
-        <div v-if="isModalOpen" class="vehicle-modal">
+        <div v-if="isOverlayOpen" class="modal-overlay" @click="closeModal"></div>
+        <div class="createModal" v-if="createModalIsOpen">
+            <EditForm :fields="createVehicleFields" :formData="newVehicle" :submitForm="postNewVehicle" dataType="du véhicule" />
+        </div>
+        <div v-if="isEditModalOpen" class="vehicle-modal">
             <EditForm :fields="vehicleFields" :formData="vehicle" :submitForm="submitForm" dataType="Véhicule" />
         </div>
 
-        <!--<div class="contact-modal" v-if="isModalOpen">
-        <form  method="post">
-            <label for="id">ID:</label>
-            <input type="text" id="id" name="id" v-model="vehicle.id"><br><br>
 
-            <label for="name">Nom:</label>
-            <input type="text" id="name" name="name"  v-model="vehicle.name"><br><br>
-
-            <label for="km">Kilométrage:</label>
-            <input type="text" id="km" name="km" v-model="vehicle.km" ><br><br>
-
-            <label for="color_name">Couleur:</label>
-            <input type="text" id="color_name" name="color_name" v-model="vehicle.color_name"><br><br>
-
-            <label for="automatic_gear">Boîte automatique:</label>
-            <input type="checkbox" id="automatic_gear" name="automatic_gear" v-model="vehicle.automatic_gear"><br><br>
-
-            <label for="hasBeenSold">Vendu:</label>
-            <input type="checkbox" id="hasBeenSold" name="hasBeenSold" v-model="vehicle.hasBeenSold"><br><br>
-
-            <label for="registration_date">Date d'enregistrement:</label>
-            <input type="date" id="registration_date" name="registration_date" v-model="vehicle.registration_date"><br><br>
-
-            <label for="comments">Commentaires:</label>
-            <textarea  v-model="vehicle.comments" id="comments" name="comments">{{vehicle.comments}}</textarea><br><br>
-
-            <input  @click="submitForm" type="submit" value="Soumettre la modification du véhicule">
-        </form>
-    </div>-->
         <div class="deleteModal" v-if="deleteModal">
-            <h2> Vous etes sur le point de supprimer le véhicule dont l'id est {{deleteId}} </h2>
+            <h2> Vous etes sur le point de supprimer le véhicule dont l'id est {{idToDelete}} </h2>
             <p> Etes vous sur ce choix ? </p>
-            <button @click="suppression"> Confirmer la supprssion</button>
+            <button @click="deleteConfirmation()"> Confirmer la supprssion</button>
         </div>
         <!--<div class="modal-overlay"
          v-if="isOverlayOpen"
@@ -89,12 +36,24 @@
                 vehicle: {
                 },
                 formData: {},
-                deleteId: "",
-                isModalOpen: false,
+                idToDelete: "",
+                isEditModalOpen: false,
+                createModalIsOpen: false,
                 deleteModal: false,
+                newVehicle: {}, // objet vide dans lequel on va stocker les informations du nouveau véhicule à créer
                 isOverlayOpen: false,
                 vehicleFields: {
                     Id: { type: 'number', label: 'Id' },
+                    RegistrationDate: { type: 'date', label: 'Date d\'immatriculation' },
+                    Km: { type: 'text', label: 'Kilométrage :' },
+                    AutomaticGear: { type: 'checkbox', label: 'Boite de vitesse automatique ' },
+                    HasBeenSold: { type: 'checkbox', label: 'Vendu ? :' },
+                    Comments: { type: 'textarea', label: 'Commentaires : ' },
+                    ModelId: { type: 'hidden', label: 'ModelId' },
+                    ColorId: { type: 'hidden', label: 'ColorId' },
+                },
+                createVehicleFields: {
+                   
                     RegistrationDate: { type: 'date', label: 'Date d\'immatriculation' },
                     Km: { type: 'text', label: 'Kilométrage :' },
                     AutomaticGear: { type: 'checkbox', label: 'Boite de vitesse automatique ' },
@@ -128,7 +87,7 @@
             },
             editVehicle(index) {
                 
-                this.isModalOpen = true
+                this.isEditModalOpen = true
                 this.isOverlayOpen = true
   
                 this.vehicle = {
@@ -143,19 +102,21 @@
                 }
              
             },
+            handleCreate() {
+                console.log('click')
+                this.createModalIsOpen = true;
+                this.isOverlayOpen = true;
+
+
+            },
             handleDelete(id) {
 
-                this.deleteId = id
+                this.idToDelete = id
                 this.deleteModal = true;
                 this.isOverlayOpen = true;
             },
-            closeModal() {
-                this.isModalOpen = false
-                this.isOverlayOpen = false
-                this.deleteModal = false;
-            },
             overlayClick() {
-                this.isModalOpen = false;
+                this.isEditModalOpen = false;
                 this.isOverlayOpen = false;
                 this.deleteModal= false;
             },
@@ -182,7 +143,53 @@
 
                     console.error('Échec de la requête : ' + response.status);
                 }
-            }
+            },
+            async postNewVehicle(newVehicle) {
+                /*newVehicle.Km = */ parseInt(newVehicle.Km);
+               /* newVehicle.ModelId = */ parseInt(newVehicle.ModelId)
+               /* newVehicle.ColorId = */parseInt(newVehicle.ColorId)
+
+                const url = 'https://localhost:7045/api/vehicles/PostNewVehicle'
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newVehicle)
+                })
+                console.log("response : ", response)
+                if (response.ok) {
+                    console.log("nouveau véhicule crée avec succès !")
+                    this.closeModal();
+                } else {
+
+                    console.error('Échec de la requête : ' + response.status);
+                }
+            },
+             async deleteConfirmation(id) {
+                const url = `https://localhost:7045/api/vehicles/DeleteAVehicle?id=${id}`
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                console.log("response : ", response)
+                if (response.ok) {
+                    console.log(" Véhicule supprimé avec succès !")
+                    this.closeModal();
+                } else {
+
+                    console.error('Échec de la requête : ' + response.status);
+                }
+            },
+            closeModal() {
+                this.isEditModalOpen = false;
+                this.isOverlayOpen = false;
+                this.createModalIsOpen = false;
+                this.deleteModal = false,
+                    this.fectchAllVehicles()
+            },
         },
          created() {
              this.fectchAllVehicles();
@@ -226,5 +233,12 @@
         z-index: 3;
         display: flex;
         flex-direction: column;
+    }
+    .create-button {
+        background-color: green;
+        padding: 20px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
     }
 </style>

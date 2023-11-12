@@ -1,38 +1,14 @@
 <template>
     <div class="">
         <h1>Adminsitration des RESERVATIONS</h1>
-        <!--<table border="1">
-        <tr>
-            <th>id</th>
-            <th>departure_date</th>
-            <th>return_date</th>
-            <th>firstname</th>
-            <th>lastname</th>
-            <th>model</th>
-            <th>éditer</th>
-            <th>supprimer</th>
-        </tr>
-
-        <tr v-for="rental in rentalsList">
-            <td> {{rental.rental_id }} </td>
-            <td> {{rental.departure_date }} </td>
-            <td> {{rental.return_date}} </td>
-            <td> {{rental.firstname}} </td>
-            <td> {{rental.lastname}} </td>
-            <td> {{rental.name }} </td>
-            <td> <img height="20" src="@/assets/editer.png" /> </td>
-            <td> <img height="20" src="@/assets/supprimer.png" /> </td>
-
-
-        </tr>
-    </table>-->
+        <button class="create-button" @click="handleCreate"> Créer une nouvelle location </button>
         <AdminTable :columns="rentalsColumns" :items="rentalsList" :openEditModal="editRental" />
-        <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
+        <div v-if="isOverlayOpen" class="modal-overlay" @click="closeModal"></div>
         <div class="createModal" v-if="createModalIsOpen">
-            <EditForm :fields="createClientFields" :formData="newClient" :submitForm="postNewClient" dataType="Client" />
+            <EditForm :fields="createRentalFields" :formData="newRental" :submitForm="postNewRental" dataType="de la Réservation" />
         </div>
         <div v-if="isEditModalOpen" class="edit-modal">
-            <EditForm :fields="rentalFields" :formData="formData" :submitForm="submitForm" dataType="Client"  />
+            <EditForm :fields="rentalFields" :formData="formData" :submitForm="submitForm" dataType="Client" />
         </div>
         <div class="deleteModal" v-if="deleteModal">
             <h2> Vous etes sur le point de supprimer le client dont l'id est : {{idToDelete}} </h2>
@@ -54,10 +30,19 @@
                 isOverlayOpen: false,
                 formData: {},
                 isEditModalOpen: false,
+                createModalIsOpen: false,
+                newRental: {},
                 rentalFields: {
                     Id: { type: 'text', label: 'ID de la réservation' },
                     DepartureDate: { type: 'text', label: 'date de départ' },
                     ReturnDate: { type: 'text', label: 'date de retour' },
+                    ClientId: { type: 'number', label: 'id client' },
+                    VehicleId: { type: 'number', label: 'id du véhicule' },
+                },
+                createRentalFields: {
+                 
+                    DepartureDate: { type: 'date', label: 'date de départ' },
+                    ReturnDate: { type: 'date', label: 'date de retour' },
                     ClientId: { type: 'number', label: 'id client' },
                     VehicleId: { type: 'number', label: 'id du véhicule' },
                 },
@@ -78,11 +63,6 @@
             openModal() {
                 this.isEditModalOpen = true;
                 this.isOverlayOpen = true;
-            },
-            overlayClick() {
-                this.isEditModalOpen = false;
-                this.isOverlayOpen = false;
-                this.deleteModal = false;
             },
             async editRental(index) {
                 this.formData.Id = parseInt(this.rentalsList[index].rental_id)
@@ -111,9 +91,35 @@
                     console.error('Échec de la requête : ' + response.status);
                 }
             },
+            handleCreate() {
+                console.log('click')
+                this.createModalIsOpen = true;
+                this.isOverlayOpen = true;
+
+
+            },
+            async postNewRental(newRental) {
+                const url = 'https://localhost:7045/api/rentals/PostNewRental'
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newRental)
+                })
+                console.log("response : ", response)
+                if (response.ok) {
+                    console.log("nouvelle réservation crée avec succès !")
+                    this.closeModal();
+                } else {
+
+                    console.error('Échec de la requête : ' + response.status);
+                }
+            },
             closeModal() {
                 this.isEditModalOpen = false;
                 this.isOverlayOpen = false;
+                this.createModalIsOpen = false;
                 this.fectchAllRentals();
             },
         },

@@ -14,7 +14,7 @@
             <button @click="confirmSuppression"> Confirmer la suppression</button>
         </div>
         <div class="createModal" v-if="createModalIsOpen">
-            <EditForm :fields="createClientFields" :formData="newClient" :submitForm="postNewClient" dataType="Client" />
+            <EditForm :fields="createClientFields" :formData="newClient" :submitForm="postNewClient" dataType="du client" />
         </div>
     </div>
 </template>

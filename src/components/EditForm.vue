@@ -20,7 +20,7 @@
             </template>
             <br><br>
         </label>
-        <input type="submit" :value="`Soumettre la modification du ${dataType}`">
+        <input type="submit" :value="`Soumettre la modification ${dataType}`">
     </form>
 </template>
 

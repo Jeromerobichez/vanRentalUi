@@ -20,7 +20,7 @@
             </template>
             <br><br>
         </label>
-        <input type="submit" value="Soumettre la modification du véhicule">
+        <input type="submit" :value="`Soumettre la modification du ${dataType}`">
     </form>
 </template>
 
@@ -38,6 +38,10 @@
             submitForm: {
                 type: Function,
                 required: true,
+            },
+            dataType: {
+                type: String,
+                Required: true
             }
         },
     };

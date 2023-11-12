@@ -35,7 +35,7 @@
 
         <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
         <div v-if="isModalOpen" class="vehicle-modal">
-            <EditForm :fields="vehicleFields" :formData="vehicle" :submitForm="submitForm" />
+            <EditForm :fields="vehicleFields" :formData="vehicle" :submitForm="submitForm" dataType="Véhicule" />
         </div>
 
         <!--<div class="contact-modal" v-if="isModalOpen">

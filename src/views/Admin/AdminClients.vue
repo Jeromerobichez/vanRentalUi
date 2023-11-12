@@ -11,7 +11,7 @@
         <div class="deleteModal" v-if="deleteModal">
             <h2> Vous etes sur le point de supprimer le client dont l'id est : {{idToDelete}} </h2>
             <p> Etes vous sur ce choix ? </p>
-            <button @click="confirmSuppression"> Confirmer la suppression</button>
+            <button @click="deleteConfirmation(idToDelete)"> Confirmer la suppression</button>
         </div>
         <div class="createModal" v-if="createModalIsOpen">
             <EditForm :fields="createClientFields" :formData="newClient" :submitForm="postNewClient" dataType="du client" />
@@ -134,8 +134,22 @@
                 this.createModalIsOpen = false;
                 this.fectchAllClients();
             },
-            confirmSuppression() {
-                console.log("supprimer !")
+            async deleteConfirmation(id) {
+                const url = `https://localhost:7045/api/clients/DeleteAClient?id=${id}`
+                const response = await fetch(url, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                })
+                console.log("response : ", response)
+                if (response.ok) {
+                    console.log(" réservation supprimée avec succès !")
+                    this.closeModal();
+                } else {
+
+                    console.error('Échec de la requête : ' + response.status);
+                }
             }
         },
         mounted() {

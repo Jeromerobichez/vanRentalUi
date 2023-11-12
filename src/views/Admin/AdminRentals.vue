@@ -2,7 +2,7 @@
     <div class="">
         <h1>Adminsitration des RESERVATIONS</h1>
         <button class="create-button" @click="handleCreate"> Créer une nouvelle location </button>
-        <AdminTable :columns="rentalsColumns" :items="rentalsList" :openEditModal="editRental" />
+        <AdminTable :columns="rentalsColumns" :items="rentalsList" :openEditModal="editRental" :handleDelete="handleDelete" />
         <div v-if="isOverlayOpen" class="modal-overlay" @click="closeModal"></div>
         <div class="createModal" v-if="createModalIsOpen">
             <EditForm :fields="createRentalFields" :formData="newRental" :submitForm="postNewRental" dataType="de la Réservation" />
@@ -11,9 +11,9 @@
             <EditForm :fields="rentalFields" :formData="formData" :submitForm="submitForm" dataType="Client" />
         </div>
         <div class="deleteModal" v-if="deleteModal">
-            <h2> Vous etes sur le point de supprimer le client dont l'id est : {{idToDelete}} </h2>
+            <h2> Vous etes sur le point de supprimer la réservation dont l'id est : {{idToDelete}} </h2>
             <p> Etes vous sur ce choix ? </p>
-            <button @click="confirmSuppression"> Confirmer la suppression</button>
+            <button @click="deleteConfirmation(idToDelete)"> Confirmer la suppression</button>
         </div>
     </div>
 </template>
@@ -29,9 +29,11 @@
                 isModalOpen: false,
                 isOverlayOpen: false,
                 formData: {},
+                deleteModal: false,
                 isEditModalOpen: false,
                 createModalIsOpen: false,
                 newRental: {},
+                idToDelete: "",
                 rentalFields: {
                     Id: { type: 'text', label: 'ID de la réservation' },
                     DepartureDate: { type: 'text', label: 'date de départ' },
@@ -57,7 +59,9 @@
                 const url = 'https://localhost:7045/api/rentals/GetAllRentals'
                 const allRentals = await fetch(url)
                 this.rentalsList = await allRentals.json();
-                console.log(" rentalsList => ", this.rentalsList)
+
+                // J'ajoute une clé "id" à chaque objet du tableau pour l'utiliser lors de la suppression  (handleDelete prend "id" et pas "rental_id" en argument)
+                this.rentalsList.forEach(e => e.id = e.rental_id)
 
             },
             openModal() {
@@ -120,11 +124,38 @@
                 this.isEditModalOpen = false;
                 this.isOverlayOpen = false;
                 this.createModalIsOpen = false;
+                this.deleteModal= false,
                 this.fectchAllRentals();
             },
+            handleDelete(id) {
+
+                console.log("deleted id : ", id)
+                this.idToDelete = id
+                this.deleteModal = true;
+                this.isOverlayOpen = true;
+            },
+            async deleteConfirmation(id) {
+
+                const url = `https://localhost:7045/api/rentals/DeleteARental?id=${id}`
+                    const response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                    console.log("response : ", response)
+                    if (response.ok) {
+                        console.log(" réservation supprimée avec succès !")
+                        this.closeModal();
+                    } else {
+
+                        console.error('Échec de la requête : ' + response.status);
+                    }
+            }
         },
         mounted() {
             this.fectchAllRentals();
+
           
         }
     }

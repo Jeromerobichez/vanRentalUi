@@ -3,14 +3,14 @@
         <h1>Page de présenation des différents modèle de véhicules</h1>
         <!--<VehiclePresentationComponent v-if="modelsData" :modelData="modelsData" />--> 
         <div v-if="modelsData" v-for="model in modelsData" class="card-vehicle">
-            <div class="card-vehcile-text">
+            <div class="card-vehicle-text">
                 <h2>{{model.name}} </h2>
                 <p> Nombre de place : {{model.pax}}</p>
                 <p> Contenance du réservoir : {{model.gasTank}}</p>
                 <p> Prix par jour : {{model.pricePerDay}}</p>
             </div>
-            <div class="card-vehcile-div-image">
-                <img class="card-vehcile-img" :src="model.pictureUrl" />
+            <div class="card-vehicle-div-image">
+                <img class="card-vehicle-img" :src="model.pictureUrl" />
             </div>
 
 
@@ -49,13 +49,18 @@ VehiclePresentationComponent
 <style>
     .card-vehicle {
         display: flex;
-        justify-content: space-around;
-    }
-    .card-vehicle {
+        justify-content: space-between;
         border: 1px solid black;
         margin: 20px;
+        width: 300px;
+        flex-direction: column;
     }
-    .card-vehcile-img{
-        max-height: 200px;
+    .card-vehicle-div-image {
+        width: 300px;
+    }
+    .card-vehicle-img {
+       object-fit: cover;
+       width: 100%;
+       height: 100%;
     }
 </style>

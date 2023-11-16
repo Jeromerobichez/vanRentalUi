@@ -5,7 +5,6 @@
             <tr>
                 <th v-for="(column, index) in columns" :key="index">
                     {{ column }}
-                    <button @click="sortByColumn(column)">▲</button>
                 </th>
                 <th>éditer</th>
                 <th>supprimer</th>
@@ -43,5 +42,8 @@
                 required: false,
             }
         },
+        mounted() {
+            console.log("items : ", this.$props.items)
+        }
     };
 </script>

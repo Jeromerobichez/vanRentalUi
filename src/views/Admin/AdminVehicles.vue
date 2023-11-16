@@ -10,7 +10,7 @@
             <EditForm :fields="createVehicleFields" :formData="newVehicle" :submitForm="postNewVehicle" dataType="du véhicule" />
         </div>
         <div v-if="isEditModalOpen" class="vehicle-modal">
-            <EditForm :fields="vehicleFields" :formData="vehicle" :submitForm="submitForm" dataType="Véhicule" />
+            <EditForm :fields="vehicleFields" :formData="vehicle" :submitForm="updateVehicle" dataType="Véhicule" />
         </div>
 
 
@@ -120,11 +120,13 @@
                 this.isOverlayOpen = false;
                 this.deleteModal= false;
             },
-            async submitForm( dataToSend) {
+            async updateVehicle(dataToSend) {
                
                 const url = "https://localhost:7045/api/vehicles/UpdateVehicle"
  
                 dataToSend.Km = parseInt(dataToSend.Km)
+                dataToSend.ColorId = parseInt(dataToSend.ColorId)
+                dataToSend.ModelId = parseInt(dataToSend.ModelId)
   
                 const response = await fetch(url, {
                     method: 'PATCH',
@@ -145,9 +147,9 @@
                 }
             },
             async postNewVehicle(newVehicle) {
-                /*newVehicle.Km = */ parseInt(newVehicle.Km);
-               /* newVehicle.ModelId = */ parseInt(newVehicle.ModelId)
-               /* newVehicle.ColorId = */parseInt(newVehicle.ColorId)
+                newVehicle.Km =  parseInt(newVehicle.Km);
+                newVehicle.ModelId =  parseInt(newVehicle.ModelId)
+                newVehicle.ColorId = parseInt(newVehicle.ColorId)
 
                 const url = 'https://localhost:7045/api/vehicles/PostNewVehicle'
                 const response = await fetch(url, {

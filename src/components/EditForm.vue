@@ -3,6 +3,7 @@
     <form @submit.prevent="submitForm(formData)">
         <label v-for="(field, fieldName) in fields" :key="fieldName" :for="fieldName">
             {{ field.label }}:
+   
             <template v-if="field.type === 'checkbox'">
                 <input type="checkbox" :id="fieldName" :name="fieldName" v-model="formData[fieldName]">
             </template>
@@ -44,5 +45,8 @@
                 Required: true
             }
         },
+        mounted() {
+            console.log("fiedls ::", this.fields)
+        }
     };
 </script>

@@ -4,7 +4,7 @@
         <button class="create-button" @click="handleCreate"> Créer un nouveau client </button>
         <AdminTable :columns="clientsColumns" :items="clientsList" :openEditModal="editClient" :handleDelete="handleDelete" />
 
-        <div v-if="isOverlayOpen" class="modal-overlay" @click="overlayClick"></div>
+        <div v-if="isOverlayOpen" class="modal-overlay" @click="closeModal"></div>
         <div v-if="isEditModalOpen" class="edit-modal">
             <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm" />
         </div>
@@ -35,7 +35,7 @@
                 isEditModalOpen: false,
                 isOverlayOpen: false,
                 clientFields: {   
-                    Id: { type: 'text', label: 'ID' },
+                    Id: { type: 'hidden', label: 'ID' },
                     Lastname: { type: 'text', label: 'Nom' },
                     Firstname: { type: 'text', label: 'Prénom' },
                     Tel: { type: 'text', label: 'telephone' },

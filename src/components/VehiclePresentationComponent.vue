@@ -7,7 +7,7 @@
     <h2 class="card-vehicle-h2-large">{{modelData.name}}</h2>
     <div class="card-vehicle" @click="openMyModal">
 
-        <div class="">
+        
             <div class="card-vehcile-text">
 
                 <h2 class="card-vehicle-h2-small">{{modelData.name}} </h2>
@@ -19,7 +19,7 @@
             <div class="card-vehcile-div-image">
                 <img class="card-vehcile-img" :src="modelData.picture_url" />
             </div>
-        </div>
+       
     </div>
     <div class="contact-modal" v-if="myModalIsOpen">
         <form method="post">

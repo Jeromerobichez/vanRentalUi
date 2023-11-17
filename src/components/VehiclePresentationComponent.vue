@@ -3,18 +3,7 @@
          v-if="myModalIsOpen"
          @click="closeMyModal">
     </div>
-    <!--<h2 class="card-vehicle-h2-large">{{model.name}}</h2>
-    <div class="card-vehicle">
-        <div class="card-vehicle-text">
-            <h2 class="card-vehicle-h2-small">{{model.name}} </h2>
-            <p> Nombre de place : {{model.pax}}</p>
-            <p> Contenance du réservoir : {{model.gasTank}}</p>
-            <p> Prix par jour : {{model.pricePerDay}}</p>
-        </div>
-        <div class="card-vehicle-div-image">
-            <img class="card-vehicle-img" :src="model.pictureUrl" />
-        </div>
-    </div>-->
+
     <h2 class="card-vehicle-h2-large">{{modelData.name}}</h2>
     <div class="card-vehicle" @click="openMyModal">
 

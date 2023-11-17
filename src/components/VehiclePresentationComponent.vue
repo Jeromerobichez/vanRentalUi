@@ -15,20 +15,21 @@
             <img class="card-vehicle-img" :src="model.pictureUrl" />
         </div>
     </div>-->
-<div class="card-vehicle-list" @click="openMyModal">
     <h2 class="card-vehicle-h2-large">{{modelData.name}}</h2>
-    <div class="card-vehicle">
-        <div class="card-vehcile-text">
+    <div class="card-vehicle" @click="openMyModal">
 
-            <h2 class="card-vehicle-h2-small">{{modelData.name}} </h2>
-            <p> Nombre de place : {{modelData.pax}}</p>
-            <p> Contenance du réservoir : {{modelData.gas_tank}}</p>
-            <p> Prix par jour : {{modelData.price_per_day}}</p>
-            <p> Prix total pour cette période : {{modelData.rentalPrice}}</p>
-        </div>
-        <div class="card-vehcile-div-image">
-            <img class="card-vehcile-img" :src="modelData.picture_url" />
-        </div>
+        <div class="">
+            <div class="card-vehcile-text">
+
+                <h2 class="card-vehicle-h2-small">{{modelData.name}} </h2>
+                <p> Nombre de place : {{modelData.pax}}</p>
+                <p> Contenance du réservoir : {{modelData.gas_tank}}</p>
+                <p> Prix par jour : {{modelData.price_per_day}}</p>
+                <p> Prix total pour cette période : {{modelData.rentalPrice}}</p>
+            </div>
+            <div class="card-vehcile-div-image">
+                <img class="card-vehcile-img" :src="modelData.picture_url" />
+            </div>
         </div>
     </div>
     <div class="contact-modal" v-if="myModalIsOpen">

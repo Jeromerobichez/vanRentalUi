@@ -4,7 +4,7 @@
         <p v-if="availableVehicles.modelsAvailable">
             Nous avons {{availableVehicles.modelsAvailable.length}} modèle(s) de véhicule disponible du <strong>{{dateDepart}}</strong> au <strong>{{dateRetour}}</strong>
         </p>
-        <div v-for="model in availableVehicles.modelsAvailable">
+        <div  class="card-vehicle-list" v-for="model in availableVehicles.modelsAvailable">
             <VehiclePresentationComponent v-if="availableVehicles.modelsAvailable" :modelData="model" />
         </div>
 

@@ -191,8 +191,8 @@
         background-color: rgba(0,0,0,0.8);
         overflow: hidden;
     }
-    .create-button{
-        background-color: green;
+    .create-button {
+        background-color: #2f803f;
         padding: 20px;
         border-radius: 8px;
         font-weight: 700;

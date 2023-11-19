@@ -50,6 +50,9 @@ VehiclePresentationComponent
     }
 </script>
 <style>
+    * {
+        font-family: "Calibri"
+    }
     .container{
         display: flex;
         flex-direction: column;
@@ -58,7 +61,7 @@ VehiclePresentationComponent
     }
     .card-vehicle-h2-large {
         display: none;
-        background-color: #f3c309;
+        background-color: #f7953e;
     }
     .card-vehicle-h2-small {
 

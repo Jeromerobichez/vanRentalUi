@@ -66,6 +66,7 @@
         created() {
             this.fetchAvailableVehicles();
         }
+       
     }
 </script>
 <style>

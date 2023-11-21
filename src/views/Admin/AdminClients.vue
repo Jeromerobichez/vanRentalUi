@@ -5,8 +5,8 @@
         <AdminTable :columns="clientsColumns" :items="clientsList" :openEditModal="editClient" :handleDelete="handleDelete" />
 
         <div v-if="isOverlayOpen" class="modal-overlay" @click="closeModal"></div>
-        <div v-if="isEditModalOpen" class="edit-modal">
-            <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm" />
+        <div v-if="isEditModalOpen" class="edition-modal">
+            <EditForm :fields="clientFields" :formData="formData" :submitForm="submitForm" dataType="du client" />
         </div>
         <div class="deleteModal" v-if="deleteModal">
             <h2> Vous etes sur le point de supprimer le client dont l'id est : {{idToDelete}} </h2>
@@ -21,6 +21,7 @@
 <script>
     import EditForm from '@/components/EditForm.vue'
     import AdminTable from '@/components/AdminTable.vue'
+ 
     export default {
         data() {
             return {
@@ -35,7 +36,7 @@
                 isEditModalOpen: false,
                 isOverlayOpen: false,
                 clientFields: {   
-                    Id: { type: 'hidden', label: 'ID' },
+                    Id: { type: 'number', label: 'ID' },
                     Lastname: { type: 'text', label: 'Nom' },
                     Firstname: { type: 'text', label: 'Prénom' },
                     Tel: { type: 'text', label: 'telephone' },
@@ -158,8 +159,9 @@
     }
 </script>
 <style>
+    @import '@/css/modals.css';
     .edit-modal {
-        background-color: pink;
+        background-color: #f7953e;
         height: 75vh;
         width: 75vh;
         position: fixed;

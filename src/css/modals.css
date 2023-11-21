@@ -1,0 +1,15 @@
+.edition-modal {
+    background-color: #f7953e;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 20px;
+    height: 75vh;
+    width: 75vh;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+}

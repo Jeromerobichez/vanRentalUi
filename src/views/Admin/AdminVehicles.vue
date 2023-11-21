@@ -17,7 +17,7 @@
         <div class="deleteModal" v-if="deleteModal">
             <h2> Vous etes sur le point de supprimer le véhicule dont l'id est {{idToDelete}} </h2>
             <p> Etes vous sur ce choix ? </p>
-            <button @click="deleteConfirmation()"> Confirmer la supprssion</button>
+            <button class="delete-button" @click="deleteConfirmation()"> Confirmer la supprssion</button>
         </div>
         <!--<div class="modal-overlay"
          v-if="isOverlayOpen"
@@ -225,9 +225,12 @@
         overflow: hidden;
     }
     .deleteModal {
-        background-color: red;
-        height: 75vh;
-        width: 75vh;
+        background-color: #f3c309;
+        border: 1px solid black;
+        padding: 20px;
+        border-radius: 8px;
+        height: 50vh;
+        width: 50vh;
         position: fixed;
         left: 50%;
         top: 50%;
@@ -242,5 +245,12 @@
         border-radius: 8px;
         font-weight: 700;
         cursor: pointer;
+    }
+    .delete-button {
+        width: 200px;
+        background-color: #f25822;
+        border: 1px solid black;
+        border-radius: 8px;
+        padding: 10px;
     }
 </style>

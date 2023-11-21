@@ -40,7 +40,7 @@
             checkIfReturnIsPostDeparture() {
 
                 if (this.dateDeRetour !== "") {
-                    if (this.dateDeRetour < this.dateDeDepart) {
+                    if (this.dateDeRetour <= this.dateDeDepart) {
                         this.wrongDateDeRetour = true
                     }
                     else this.wrongDateDeRetour = false;

@@ -162,7 +162,7 @@
 </script>
 <style>
     .edit-modal {
-        background-color: pink;
+        background-color: #f7953e;
         height: 75vh;
         width: 75vh;
         position: fixed;

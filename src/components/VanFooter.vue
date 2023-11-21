@@ -21,7 +21,7 @@
         violet : #97aeda
     */
     .van-footer {
-        height: 30px;
+        height: 100px;
         background-color: #004042;
         width: 100%;
     }

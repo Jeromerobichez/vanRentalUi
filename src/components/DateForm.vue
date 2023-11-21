@@ -4,11 +4,18 @@
         <form >
             <div class="form-fields">
                 <label for="dateDepart">Date de départ :</label>
-                <input v-model="dateDeDepart" type="date" id="dateDepart" name="dateDepart" placeholder="Saisissez la date de départ" required>
+                <input 
+                       v-model="dateDeDepart"
+                       type="date"
+                       id="dateDepart"
+                       name="dateDepart"
+                       placeholder="Saisissez la date de départ"
+                       required
+                       class="date-input">
             </div>
             <div class="form-fields">
                 <label for="dateRetour">Date de retour :</label>
-                <input v-model="dateDeRetour" type="date" id="dateRetour" name="dateRetour" placeholder="Saisissez la date de retour" required>
+                <input v-model="dateDeRetour" type="date" id="dateRetour" name="dateRetour" placeholder="Saisissez la date de retour" required  class="date-input">
             </div>
             <p class="date-error" v-if="wrongDateDeRetour"> Veuillez entrer une date de retour qui soit posterieure à la date de départ</p>
             <input :disabled="wrongDateDeRetour" class="submit-button form-fields" type="submit" value="En route !" @click="redirectionToResultsPage">
@@ -95,5 +102,9 @@
     .date-error {
         font-weight: 700;
         color: red;
+    }
+    .date-input{
+        padding: 3px;
+
     }
 </style>

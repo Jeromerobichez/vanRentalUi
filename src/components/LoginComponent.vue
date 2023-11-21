@@ -40,7 +40,7 @@
 
                 <input type="submit"
                        class="button block"
-                       :value="loading ? 'Loading' : 'Send magic link'"
+                       :value="loading ? 'Loading' : 'se connecter'"
                        :disabled="loading" />
             </div>
         </div>

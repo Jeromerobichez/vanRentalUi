@@ -34,6 +34,14 @@
 
             <input type="hidden" id="modelId" name="modelId" v-model="requestRental.ModelId">
 
+            <label for="ClientName"> Votre nom : </label>
+            <input type="text" id="clientName" name="clientName" v-model="requestRental.ClientName" />
+
+            <label for="ClientEmail"> Votre email : </label>
+            <input type="text" id="ClientEmail" name="ClientEmail" v-model="requestRental.ClientEmail" />
+            <label for="ClientTel"> Votre téléphone : </label>
+            <input type="text" id="ClientTel" name="ClientTel" v-model="requestRental.ClientTel" />
+
             <label for="message">Message :</label>
             <textarea v-model="requestRental.MessageRequest" id="message" name="message" rows="10" cols="20"></textarea><br><br>
 
@@ -51,6 +59,9 @@
                     ReturnDateRequested: this.$route.query.retour,
                     ModelVehicleRequested: this.modelData.name,
                     ModelId: this.modelData.id,
+                    ClientName: this.modelData.ClientName,
+                    ClientEmail: this.modelData.ClientEmail,
+                    ClientTel: this.modelData.ClientTel,
                     MessageRequest: ''
                 }
             }

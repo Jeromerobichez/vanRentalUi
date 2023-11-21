@@ -39,6 +39,7 @@
 
             <label for="ClientEmail"> Votre email : </label>
             <input type="text" id="ClientEmail" name="ClientEmail" v-model="requestRental.ClientEmail" />
+
             <label for="ClientTel"> Votre téléphone : </label>
             <input type="text" id="ClientTel" name="ClientTel" v-model="requestRental.ClientTel" />
 
@@ -127,7 +128,7 @@
         max-height: 200px;
     }
     .contact-modal {
-        background-color: red;
+        background-color: #3198b9;
         height: 75vh;
         width: 75vh;
         position: fixed;
@@ -137,8 +138,10 @@
         z-index: 3;
         display: flex;
         flex-direction: column;
+        padding: 15px;
+        border-radius: 8px;
+        border: 1px solid black;
     }
-
     .modal-overlay {
         position: fixed;
         top: 0;

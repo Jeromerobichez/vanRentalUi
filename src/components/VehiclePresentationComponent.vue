@@ -115,12 +115,6 @@
 
             }
         },
-        mounted() {
-            console.log("modelData : ", this.modelData)
-        },
-        updated() {
-            console.log("REQUEST : ", this.requestRental)
-        }
     }
 </script>
 <style scoped>

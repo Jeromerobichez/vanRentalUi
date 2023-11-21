@@ -35,10 +35,10 @@
             <input type="hidden" id="modelId" name="modelId" v-model="requestRental.ModelId">
 
             <label for="ClientName"> Votre nom : </label>
-            <input type="text" id="clientName" name="clientName" v-model="requestRental.ClientName" />
+            <input type="text" id="clientName" name="clientName" v-model="requestRental.ClientName" required />
 
             <label for="ClientEmail"> Votre email : </label>
-            <input type="text" id="ClientEmail" name="ClientEmail" v-model="requestRental.ClientEmail" />
+            <input type="text" id="ClientEmail" name="ClientEmail" v-model="requestRental.ClientEmail" required />
 
             <label for="ClientTel"> Votre téléphone : </label>
             <input type="text" id="ClientTel" name="ClientTel" v-model="requestRental.ClientTel" />

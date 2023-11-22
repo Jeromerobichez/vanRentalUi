@@ -37,7 +37,8 @@
 
 <style scoped>
     #app {
-        display: block;
+      
+        background-color: #97aeda;
     }
     header {
       

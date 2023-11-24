@@ -1,8 +1,14 @@
 <template>
     <div class="container">
+        <div class="modal-overlay"
+             v-if="isModalOpen"
+             @click="closeContactModal">
+        </div>
+        <div class="detail-modal" 
+             v-if="isModalOpen">MODAL</div>
         <h1>Page de présenation des différents modèle de véhicules</h1>
-        <!--<VehiclePresentationComponent v-if="modelsData" :modelData="modelsData" />--> 
-        <div v-if="modelsData" v-for="model in modelsData" class="card-vehicle-list">
+        <!--<VehiclePresentationComponent v-if="modelsData" :modelData="modelsData" />-->
+        <div v-if="modelsData" v-for="model in modelsData" class="card-vehicle-total" @click="openDetailModal">
             <h2 class="card-vehicle-h2-large">{{model.name}}</h2>
             <div class="card-vehicle">
                 <div class="card-vehicle-text">
@@ -26,7 +32,8 @@
     export default {
         data() {
             return {
-                modelsData: []
+                modelsData: [],
+                isModalOpen: false,
             };
         },
         components: {
@@ -40,9 +47,15 @@ VehiclePresentationComponent
                 const response = await fetch(url);
                 console.log('fetch')
                 this.modelsData = await response.json();
-                
-
-            } 
+            },
+            openDetailModal() {
+                this.isModalOpen = true
+             
+            },
+            closeContactModal() {
+                this.isModalOpen = false
+              
+            }
         },
         created() {
             this.fetchVehicles()
@@ -53,11 +66,18 @@ VehiclePresentationComponent
     * {
         font-family: "Calibri"
     }
-    .container{
+    .detail-modal{
+        height: 400px;
+        width: 300px;
+        background-color: chartreuse;
+        border: 3px solid black;
+        border-radius: 8px;
+        z-index: 3;
+    }
+    .container {
         display: flex;
         flex-direction: column;
         align-items: center;
-
     }
     .card-vehicle-h2-large {
         display: none;
@@ -66,7 +86,7 @@ VehiclePresentationComponent
     .card-vehicle-h2-small {
 
     }
-    .card-vehicle-list {
+    .card-vehicle-total {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -101,7 +121,7 @@ VehiclePresentationComponent
        height: 100%;
     }
     @media screen and (min-width: 541px){
-        .card-vehicle-list{
+        .card-vehicle-total{
             width: 500px;
             align-items: center;
           

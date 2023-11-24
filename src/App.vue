@@ -35,12 +35,4 @@
     <VanFooter />
 </template>
 
-<style scoped>
-    #app {
-      
-        background-color: #97aeda;
-    }
-    header {
-      
-    }
-</style>
+

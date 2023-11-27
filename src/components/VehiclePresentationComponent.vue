@@ -22,33 +22,36 @@
        
     </div>
     <div class="contact-modal" v-if="myModalIsOpen">
-        <form method="post">
-            <label for="dateDepart">Date de départ :</label>
-            <input type="date" id="dateDepart" name="dateDepart" v-model="requestRental.DepartureDateRequested" required><br><br>
-
-            <label for="dateRetour">Date de retour :</label>
-            <input type="date" id="dateRetour" name="dateRetour" v-model="requestRental.ReturnDateRequested" required><br><br>
-
-            <label for="modeleVehicule">Modèle de véhicule :</label>
-            <input type="text" id="modeleVehicule" name="modeleVehicule" v-model="requestRental.ModelVehicleRequested" required><br><br>
-
-            <input type="hidden" id="modelId" name="modelId" v-model="requestRental.ModelId">
-
-            <label for="ClientName"> Votre nom : </label>
-            <input type="text" id="clientName" name="clientName" v-model="requestRental.ClientName" required />
-
-            <label for="ClientEmail"> Votre email : </label>
-            <input type="text" id="ClientEmail" name="ClientEmail" v-model="requestRental.ClientEmail" required />
-
-            <label for="ClientTel"> Votre téléphone : </label>
-            <input type="text" id="ClientTel" name="ClientTel" v-model="requestRental.ClientTel" />
-
-            <label for="message">Message :</label>
-            <textarea v-model="requestRental.MessageRequest" id="message" name="message" rows="10" cols="20"></textarea><br><br>
-
+       
+        <form class="form-container" method="post">
+            <div class="column-container">
+                <div class="column-label">
+                    <label for="dateDepart">Date de départ :</label>
+                    <label for="dateRetour">Date de retour :</label>
+                    <label for="modeleVehicule">Modèle de véhicule :</label>
+                    <label for="ClientName"> Votre nom : </label>
+                    <label for="ClientEmail"> Votre email : </label>
+                    <label for="ClientTel"> Votre téléphone : </label>
+                    <label for="message">Message :</label>
+                </div>
+                <div class="column-inputs">
+                    <input type="date" id="dateDepart" name="dateDepart" v-model="requestRental.DepartureDateRequested" required>
+                    <input type="date" id="dateRetour" name="dateRetour" v-model="requestRental.ReturnDateRequested" required>
+                    <input type="text" id="modeleVehicule" name="modeleVehicule" v-model="requestRental.ModelVehicleRequested" required>
+                    <input type="text" id="clientName" name="clientName" v-model="requestRental.ClientName" required />
+                    <input type="text" id="ClientEmail" name="ClientEmail" v-model="requestRental.ClientEmail" required />
+                    <input type="text" id="ClientTel" name="ClientTel" v-model="requestRental.ClientTel" />
+                    <textarea v-model="requestRental.MessageRequest" id="message-contact" name="message" rows="10" cols="20"></textarea>
+                </div>
+            </div>
+          
+            <div class="fields">
+              
+             
+            </div>
             <input @click="sendRequestRental" type="submit" value="Envoyer">
         </form>
-    </div>
+        </div>
 </template>
 <script>
     export default {
@@ -118,6 +121,25 @@
     }
 </script>
 <style scoped>
+    .column-container{
+        display: flex;
+        gap: 40px;
+    }
+    .column-label{
+        display: flex;
+        flex-direction: column;
+        width: 200px !important;
+    }
+    .column-inputs{
+        width: 150px;
+    }
+    .fields {
+        display: flex;
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+    }
     .card-vehcile-img {
         max-height: 200px;
     }
@@ -144,5 +166,15 @@
         z-index: 2;
         background-color: rgba(0,0,0,0.8);
         overflow: hidden;
+    }
+    input{
+        width: 200px;
+       margin-bottom: 10px;
+    }
+    label{
+        margin-bottom: 10px;
+    }
+    textarea {
+        width: 200px;
     }
 </style>

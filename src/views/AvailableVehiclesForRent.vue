@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Page ou apparaissent les véhicules aux dates demandées</h1>
+        <h1>Voici les véhicules correspondant à votre recherche : </h1>
         <p v-if="availableVehicles.modelsAvailable">
             Nous avons {{availableVehicles.modelsAvailable.length}} modèle(s) de véhicule disponible du <strong>{{dateDepart}}</strong> au <strong>{{dateRetour}}</strong>
         </p>

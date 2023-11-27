@@ -2,7 +2,7 @@
 
 <template>
   <main>
-<h1>Bienvenue sur le site de vanRental !</h1>
+<h1>Bienvenue sur le site de vanRental </h1>
       <section class="hero-section">
           <h2 class="hero-h2"> Partir à l'aventure !</h2>
       </section>
@@ -29,6 +29,10 @@
  
 </script>
 <style>
+    h1{
+        padding: 20px;
+        text-align: center;
+    }
     .hero-section{
         height: 250px;
         background-image: url('@/assets/california-hero.jpg');

@@ -1,10 +1,10 @@
 <template>
-    <div class="">
+    <div class="container">
         <h1>Page ou apparaissent les véhicules aux dates demandées</h1>
         <p v-if="availableVehicles.modelsAvailable">
             Nous avons {{availableVehicles.modelsAvailable.length}} modèle(s) de véhicule disponible du <strong>{{dateDepart}}</strong> au <strong>{{dateRetour}}</strong>
         </p>
-        <div  class="card-vehicle-list" v-for="model in availableVehicles.modelsAvailable">
+        <div  class="card-vehicle-total" v-for="model in availableVehicles.modelsAvailable">
             <VehiclePresentationComponent v-if="availableVehicles.modelsAvailable" :modelData="model" />
         </div>
 
@@ -70,6 +70,11 @@
     }
 </script>
 <style>
+    .container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+    }
     .contact-modal {
         background-color: white;
         height: 75vh;

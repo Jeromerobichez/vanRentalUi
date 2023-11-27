@@ -213,6 +213,7 @@
         z-index: 3;
         display: flex;
         flex-direction: column;
+        padding: 20px;
     }
 
     .modal-overlay {
@@ -245,6 +246,7 @@
         border-radius: 8px;
         font-weight: 700;
         cursor: pointer;
+        margin-bottom: 20px;
     }
     .delete-button {
         width: 200px;

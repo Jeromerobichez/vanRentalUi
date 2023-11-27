@@ -171,6 +171,7 @@
         z-index: 3;
         display: flex;
         flex-direction: column;
+        padding: 20px;
     }
     .createModal {
         background-color: chartreuse;

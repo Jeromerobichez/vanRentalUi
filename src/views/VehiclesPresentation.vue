@@ -66,13 +66,19 @@ VehiclePresentationComponent
     * {
         font-family: "Calibri"
     }
-    .detail-modal{
-        height: 400px;
-        width: 300px;
+    .detail-modal {
+
         background-color: chartreuse;
         border: 3px solid black;
         border-radius: 8px;
         z-index: 3;
+        height: 75vh;
+        width: 75vh;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+
     }
     .container {
         display: flex;

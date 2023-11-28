@@ -44,8 +44,7 @@
             redirectionToResultsPage(e) {
                 e.preventDefault()
                 if (this.wrongDateDeRetour == false) {
-                    this.$router.push(`/vehicules-disponibles?
-                    depart=${this.dateDeDepart}&retour=${this.dateDeRetour}`)
+                    this.$router.push(`/vehicules-disponibles?depart=${this.dateDeDepart}&retour=${this.dateDeRetour}`)
 
                 }
                 else console.log("mauvaise date de retour")
@@ -62,6 +61,7 @@
         },
         updated() {
             this.checkIfReturnIsPostDeparture();
+            console.log("this.dateDeDepart : ", this.dateDeDepart)
         }
     }
 </script>

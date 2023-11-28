@@ -128,7 +128,7 @@
     .column-label{
         display: flex;
         flex-direction: column;
-        width: 200px !important;
+        width: 150px;
     }
     .column-inputs{
         width: 150px;

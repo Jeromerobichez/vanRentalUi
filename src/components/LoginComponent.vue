@@ -14,7 +14,7 @@
                 password: password.value,
             })
             if (error) throw error
-            alert('Check your email for the login link!')
+            alert('Vous êtes à présent connecté sur \'espace admin !')
         } catch (error) {
             if (error instanceof Error) {
                 alert(error.message)

@@ -29,6 +29,7 @@
             },
             closeConnexionModal() {
                 this.isConnexionModalOpen = false;
+                this.$router.go()
             }
         }
        

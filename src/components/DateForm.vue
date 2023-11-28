@@ -77,7 +77,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 15px;
+        padding: 15px 15px 0 15px;
         background-color: #f7953e;
         height: 500px;
     }

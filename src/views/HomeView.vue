@@ -7,12 +7,12 @@
           <h2 class="hero-h2"> Partir à l'aventure !</h2>
       </section>
       <DateForm />
-      <LoginComponent />
+    
   </main>
 </template>
 <script>
     import DateForm from '@/components/DateForm.vue';
-    import LoginComponent from '@/components/LoginComponent.vue';
+  
     export default {
         data() {
             return {
@@ -21,7 +21,7 @@
         },
         components: {
             DateForm,
-            LoginComponent,
+         
         },
         methods: {
             } 

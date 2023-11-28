@@ -28,8 +28,8 @@
 <template>
     <form class="row flex-center flex" @submit.prevent="handleLogin">
         <div class="col-6 form-widget">
-            <h1 class="header">Supabase + Vue 3</h1>
-            <p class="description">Sign in via email and password</p>
+            <h1 class="header-login">formulaire de connexion espace admin</h1>
+            <p class="description">Entrez votre email et votre mot de passe</p>
             <div>
                 <input class="inputField" required type="email" placeholder="Your email" v-model="email" />
             </div>
@@ -46,3 +46,10 @@
         </div>
     </form>
 </template>
+<style>
+    @media screen and (max-width: 540px) {
+        .header-login {
+            font-size: 20px;
+        }
+    }
+</style>

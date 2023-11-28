@@ -38,7 +38,9 @@
 </template>
 <style>
     .container-general{
-        padding: 20px;
+       display: flex;
+       justify-content: center;
+       padding: 20px;
     }
     header {
         position: relative;

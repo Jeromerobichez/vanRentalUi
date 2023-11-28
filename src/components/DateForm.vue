@@ -15,10 +15,15 @@
             </div>
             <div class="form-fields">
                 <label for="dateRetour">Date de retour :</label>
-                <input v-model="dateDeRetour" type="date" id="dateRetour" name="dateRetour" placeholder="Saisissez la date de retour" required  class="date-input">
+                <input v-model="dateDeRetour"
+                       type="date"
+                       id="dateRetour"
+                       name="dateRetour" placeholder="Saisissez la date de retour" required  class="date-input">
             </div>
-            <p class="date-error" v-if="wrongDateDeRetour"> Veuillez entrer une date de retour qui soit posterieure à la date de départ</p>
-            <input :disabled="wrongDateDeRetour" class="submit-button form-fields" type="submit" value="En route !" @click="redirectionToResultsPage">
+            <p class="date-error" v-if="wrongDateDeRetour">
+            Veuillez entrer une date de retour qui soit posterieure à la date de départ</p>
+            <input :disabled="wrongDateDeRetour" class="submit-button form-fields" type="submit"
+                   value="En route !" @click="redirectionToResultsPage">
         </form>
     </div>
 </template>
@@ -39,7 +44,8 @@
             redirectionToResultsPage(e) {
                 e.preventDefault()
                 if (this.wrongDateDeRetour == false) {
-                    this.$router.push(`/vehicules-disponibles?depart=${this.dateDeDepart}&retour=${this.dateDeRetour}`)
+                    this.$router.push(`/vehicules-disponibles?
+                    depart=${this.dateDeDepart}&retour=${this.dateDeRetour}`)
 
                 }
                 else console.log("mauvaise date de retour")
